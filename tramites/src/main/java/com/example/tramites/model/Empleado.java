@@ -1,8 +1,6 @@
 package com.example.tramites.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -10,11 +8,9 @@ import java.time.LocalDate;
 public class Empleado extends Persona {
 
   @Column(name = "dependencia", nullable = true)
-  @NotBlank(message = "La dependencia es obligatoria")
   private String dependencia;
 
-  @Column(name = "fecha_ingreso", nullable = false)
-  @NotNull(message = "La fecha de ingreso es obligatoria")
+  @Column(name = "fecha_ingreso", nullable = true)
   private LocalDate fechaIngreso;
 
   public Empleado() {

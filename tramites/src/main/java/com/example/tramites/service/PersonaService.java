@@ -1,6 +1,7 @@
 package com.example.tramites.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.example.tramites.exception.PersonaNotFoundException;
 import com.example.tramites.model.Persona;
 import com.example.tramites.model.Tercero;
 import com.example.tramites.repository.PersonaRepository;
+import com.example.tramites.utils.PersonaUpdateUtil;
 
 @Service
 public class PersonaService {
@@ -33,36 +35,29 @@ public class PersonaService {
     personaRepository.deleteById(id);
   }
 
-  public Persona editarPersona(Long id, Persona personaActualizada) {
+  public Persona editarPersonaParcial(Long id, Map<String, Object> updates) {
+    Persona persona = personaRepository.findById(id)
+        .orElseThrow(() -> new PersonaNotFoundException(id));
 
-    try{
-      Optional<Persona> personaExistente = personaRepository.findById(id);
-      if (personaExistente.isEmpty()) {
-        throw new PersonaNotFoundException(id);
-      }
-      personaActualizada.setId(id);
-      return personaRepository.save(personaActualizada);
+    PersonaUpdateUtil.updatePersonaFromMap(persona, updates);
 
-    } catch (Exception e) {
-      System.err.println("Error al editar la persona: " + id + ": " + e.getMessage());
-      throw e;
-    }
+    return personaRepository.save(persona);
   }
 
   public Tercero crearTercero(Tercero tercero) {
     return personaRepository.save(tercero);
   }
-  
+
   public Optional<Tercero> buscarTerceroPorId(Long id) {
     return personaRepository.findById(id)
-      .filter(persona -> persona instanceof Tercero)
-      .map(persona -> (Tercero) persona);
+        .filter(persona -> persona instanceof Tercero)
+        .map(persona -> (Tercero) persona);
   }
 
   public List<Tercero> listarTerceros() {
     return personaRepository.findAll().stream()
-      .filter(persona -> persona instanceof Tercero)
-      .map(persona -> (Tercero) persona)
-      .toList();
+        .filter(persona -> persona instanceof Tercero)
+        .map(persona -> (Tercero) persona)
+        .toList();
   }
 }

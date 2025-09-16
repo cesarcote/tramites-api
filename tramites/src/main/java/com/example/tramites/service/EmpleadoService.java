@@ -2,10 +2,13 @@ package com.example.tramites.service;
 
 import com.example.tramites.model.Empleado;
 import com.example.tramites.repository.EmpleadoRepository;
+import com.example.tramites.utils.EmpleadoUpdateUtil;
+import com.example.tramites.exception.EmpleadoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -30,19 +33,11 @@ public class EmpleadoService {
     empleadoRepository.deleteById(id);
   }
 
-  public Empleado editarEmpleado(Long id, Empleado empleadoActualizado) {
+  public Empleado editarEmpleadoParcial(Long id, Map<String, Object> updates) {
+    Empleado empleado = empleadoRepository.findById(id)
+        .orElseThrow(() -> new EmpleadoNotFoundException(id));
 
-    try{
-      Optional<Empleado> empleadoExistente = empleadoRepository.findById(id);
-      if (empleadoExistente.isEmpty()) {
-        throw new RuntimeException("Empleado no encontrado con ID: " + id);
-      }
-      empleadoActualizado.setId(id);
-      return empleadoRepository.save(empleadoActualizado);
-
-    } catch (Exception e) {
-      System.err.println("Error al editar el empleado: " + id + ": " + e.getMessage());
-      throw e;
-    }
+    EmpleadoUpdateUtil.updateEmpleadoFromMap(empleado, updates);
+    return empleadoRepository.save(empleado);
   }
 }

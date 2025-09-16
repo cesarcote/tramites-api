@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tramites.exception.EmpleadoNotFoundException;
 import com.example.tramites.exception.PersonaNotFoundException;
@@ -54,13 +55,18 @@ public class TramiteService {
       throw e;
 
     } catch (Exception e) {
-      System.err.println("Error al crear el trámite: " + e.getMessage());
       throw new TramiteCreationException("Error al crear el trámite: " + e.getMessage(), e);
     }
   }
 
+  @Transactional(readOnly = true)
   public List<Tramite> listarTramites() {
-    return tramiteRepository.findAll();
+    List<Tramite> tramites = tramiteRepository.findAll();
+    tramites.forEach(t -> {
+        t.getPersonaRadica().getNombres();
+        t.getEmpleadoRecibe().getNombres();
+    });
+    return tramites;
   }
 
   public Optional<Tramite> buscarPorId(Long id) {

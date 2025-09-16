@@ -24,12 +24,12 @@ public class Tramite {
   @Column(name = "descripcion", nullable = false)
   private String descripcion;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "empleado_radica_id", nullable = false)
   @NotNull(message = "El empleado que recibe es obligatiorio")
   private Persona personaRadica;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "empleado_recibe_id", nullable = false)
   @NotNull(message = "El empleado que recibe es obligatiorio")
   private Empleado empleadoRecibe;

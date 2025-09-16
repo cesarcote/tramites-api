@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 @Entity
 @Table(name = "personas")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_persona", discriminatorType  = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "tipo_persona", discriminatorType = DiscriminatorType.STRING)
 public abstract class Persona {
 
   @Id
@@ -41,9 +41,10 @@ public abstract class Persona {
   @Email(message = "El email debe ser valido")
   private String email;
 
-  public Persona() {}
+  public Persona() {
+  }
 
-  public Persona(String tipoIdentificacion, String numeroIdentificacion, String nombres, String apellidos){
+  public Persona(String tipoIdentificacion, String numeroIdentificacion, String nombres, String apellidos) {
     this.tipoIdentificacion = tipoIdentificacion;
     this.numeroIdentificacion = numeroIdentificacion;
     this.nombres = nombres;
@@ -52,7 +53,7 @@ public abstract class Persona {
 
   public abstract String getTipoPersona();
 
-  public boolean validarEmail(){
+  public boolean validarEmail() {
     return this.email != null && this.email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
   }
 
