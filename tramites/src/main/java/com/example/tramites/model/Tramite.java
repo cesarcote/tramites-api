@@ -19,10 +19,10 @@ public class Tramite {
   private Integer anoRadicacion;
 
   @Column(name = "nombre_tramite", nullable = false)
-  private Integer nombreTramite;
+  private String nombreTramite;
 
   @Column(name = "descripcion", nullable = false)
-  private Integer descripcion;
+  private String descripcion;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "funcionario_radica_id", nullable = false)
@@ -42,13 +42,15 @@ public class Tramite {
     this.anoRadicacion = this.fechaRadicacion.getYear();
   }
 
-  public Tramite(Integer nombreTramite, Integer descripcion, Empleado personaRadica, Empleado funcionarioRecibe){
+  public Tramite(String nombreTramite, String descripcion, Persona personaRadica, Empleado funcionarioRecibe) {
     this();
     this.nombreTramite = nombreTramite;
     this.descripcion = descripcion;
     this.personaRadica = personaRadica;
     this.funcionarioRecibe = funcionarioRecibe;
   }
+
+  // ...constructor único ya presente...
 
   public Long getId() {
     return id;
@@ -74,19 +76,19 @@ public class Tramite {
     this.anoRadicacion = anoRadicacion;
   }
 
-  public Integer getNombreTramite() {
+  public String getNombreTramite() {
     return nombreTramite;
   }
 
-  public void setNombreTramite(Integer nombreTramite) {
+  public void setNombreTramite(String nombreTramite) {
     this.nombreTramite = nombreTramite;
   }
 
-  public Integer getDescripcion() {
+  public String getDescripcion() {
     return descripcion;
   }
 
-  public void setDescripcion(Integer descripcion) {
+  public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
   }
 
