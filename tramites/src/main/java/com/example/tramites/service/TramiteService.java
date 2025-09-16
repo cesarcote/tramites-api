@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.tramites.exception.EmpleadoNotFoundException;
+import com.example.tramites.exception.PersonaNotFoundException;
+import com.example.tramites.exception.TramiteCreationException;
 import com.example.tramites.model.Empleado;
 import com.example.tramites.model.Persona;
 import com.example.tramites.model.Tramite;
@@ -27,21 +30,33 @@ public class TramiteService {
 
   public Tramite crearTramite(String nombreTramite, String description, Long personaId, Long empleadoId) { 
 
-    Optional<Persona> persona = personaRepository.findById(personaId);
-    Optional<Empleado> empleado = empleadoRepository.findById(empleadoId);
+    try {
+      Optional<Persona> persona = personaRepository.findById(personaId);
+      Optional<Empleado> empleado = empleadoRepository.findById(empleadoId);
+  
+      if (persona.isEmpty()) {
+        throw new PersonaNotFoundException(personaId);
+      }
+      
+      if (empleado.isEmpty()) {
+        throw new EmpleadoNotFoundException(empleadoId);
+      }
 
-    if (persona.isEmpty() || empleado.isEmpty()){
-      throw new RuntimeException("Persona o empleado no encontrado");
+      Tramite tramite = new Tramite(
+        nombreTramite,
+        description,
+        persona.get(),
+        empleado.get()
+      );
+
+      return tramiteRepository.save(tramite);
+    } catch (PersonaNotFoundException | EmpleadoNotFoundException e) {
+      throw e;
+
+    } catch (Exception e) {
+      System.err.println("Error al crear el trámite: " + e.getMessage());
+      throw new TramiteCreationException("Error al crear el trámite: " + e.getMessage(), e);
     }
-
-    Tramite tramite = new Tramite(
-      nombreTramite,
-      description,
-      persona.get(),
-      empleado.get()
-    );
-
-    return tramiteRepository.save(tramite);
   }
 
   public List<Tramite> listarTramites() {
@@ -55,21 +70,4 @@ public class TramiteService {
   public void eliminarTramite(Long id) {
     tramiteRepository.deleteById(id);
   }
-
-  public List<Persona> listarPersonas() {
-    return personaRepository.findAll();
-  }
-
-  public List<Empleado> listarEmpleados() {
-    return empleadoRepository.findAll();
-  }
-
-  public Persona crearPersona(Persona persona) {
-    return personaRepository.save(persona);
-  }
-
-  public Empleado crearEmpleado(Empleado empleado) {
-    return empleadoRepository.save(empleado);
-  }
-
 }

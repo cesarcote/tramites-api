@@ -25,32 +25,37 @@ public class Tramite {
   private String descripcion;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "funcionario_radica_id", nullable = false)
-  @NotNull(message = "El funcionario que recibe es obligatiorio")
+  @JoinColumn(name = "empleado_radica_id", nullable = false)
+  @NotNull(message = "El empleado que recibe es obligatiorio")
   private Persona personaRadica;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "funcionario_recibe_id", nullable = false)
-  @NotNull(message = "El funcionario que recibe es obligatiorio")
-  private Empleado funcionarioRecibe;
+  @JoinColumn(name = "empleado_recibe_id", nullable = false)
+  @NotNull(message = "El empleado que recibe es obligatiorio")
+  private Empleado empleadoRecibe;
 
   @Column(name = "fecha_radicacion", nullable = false, updatable = false)
   private LocalDate fechaRadicacion;
+
+  private static int contador = 1;
 
   public Tramite() {
     this.fechaRadicacion = LocalDate.now();
     this.anoRadicacion = this.fechaRadicacion.getYear();
   }
 
-  public Tramite(String nombreTramite, String descripcion, Persona personaRadica, Empleado funcionarioRecibe) {
+  public Tramite(String nombreTramite, String descripcion, Persona personaRadica, Empleado empleadoRecibe) {
     this();
     this.nombreTramite = nombreTramite;
     this.descripcion = descripcion;
     this.personaRadica = personaRadica;
-    this.funcionarioRecibe = funcionarioRecibe;
+    this.empleadoRecibe = empleadoRecibe;
+    this.numeroRadicacion = generarNumeroRadicacion();
   }
 
-  // ...constructor único ya presente...
+  private String generarNumeroRadicacion(){
+    return String.format("%04d-%06d", this.anoRadicacion, contador++);
+  }
 
   public Long getId() {
     return id;
@@ -100,12 +105,12 @@ public class Tramite {
     this.personaRadica = personaRadica;
   }
 
-  public Empleado getFuncionarioRecibe() {
-    return funcionarioRecibe;
+  public Empleado getEmpleadoRecibe() {
+    return empleadoRecibe;
   }
 
-  public void setFuncionarioRecibe(Empleado funcionarioRecibe) {
-    this.funcionarioRecibe = funcionarioRecibe;
+  public void setEmpleadoRecibe(Empleado empleadoRecibe) {
+    this.empleadoRecibe = empleadoRecibe;
   }
 
   public LocalDate getFechaRadicacion() {
