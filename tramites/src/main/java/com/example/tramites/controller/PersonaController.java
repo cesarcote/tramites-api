@@ -31,7 +31,8 @@ public class PersonaController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<PersonaPatchResponse> editarPersona(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+  public ResponseEntity<PersonaPatchResponse> editarPersona(@PathVariable Long id,
+      @RequestBody Map<String, Object> updates) {
     Persona personaActualizada = personaService.editarPersonaParcial(id, updates);
     return ResponseEntity.ok(new PersonaPatchResponse(personaActualizada));
   }
@@ -39,7 +40,7 @@ public class PersonaController {
   @PostMapping("/terceros")
   public Tercero crearTercero(@RequestBody Tercero tercero) {
     return (Tercero) personaService.crearPersona(tercero);
-  }  
+  }
 
   @GetMapping("/terceros/{id}")
   public Optional<Tercero> buscarTerceroPorId(@PathVariable Long id) {

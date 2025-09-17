@@ -4,78 +4,78 @@ import com.example.tramites.model.Persona;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PersonaPatchResponse {
-    @JsonProperty
-    private Long id;
-    
-    @JsonProperty
-    private String tipoIdentificacion;
-    
-    @JsonProperty
-    private String numeroIdentificacion;
-    
-    @JsonProperty
-    private String nombres;
-    
-    @JsonProperty
-    private String apellidos;
-    
-    @JsonProperty
-    private String telefono;
-    
-    @JsonProperty
-    private String direccion;
-    
-    @JsonProperty
-    private String email;
-    
-    @JsonProperty
-    private String tipoPersona;
+  @JsonProperty
+  private Long id;
 
-    public PersonaPatchResponse(Persona persona) {
-        this.id = persona.getId();
-        this.tipoIdentificacion = persona.getTipoIdentificacion();
-        this.numeroIdentificacion = persona.getNumeroIdentificacion();
-        this.nombres = persona.getNombres();
-        this.apellidos = persona.getApellidos();
-        this.telefono = persona.getTelefono();
-        this.direccion = persona.getDireccion();
-        this.email = persona.getEmail();
-        this.tipoPersona = persona.getTipoPersona();
-    }
+  @JsonProperty
+  private String tipoIdentificacion;
 
-    public Long getId() {
-        return id;
-    }
+  @JsonProperty
+  private String numeroIdentificacion;
 
-    public String getTipoIdentificacion() {
-        return tipoIdentificacion;
-    }
+  @JsonProperty
+  private String nombres;
 
-    public String getNumeroIdentificacion() {
-        return numeroIdentificacion;
-    }
+  @JsonProperty
+  private String apellidos;
 
-    public String getNombres() {
-        return nombres;
-    }
+  @JsonProperty
+  private String telefono;
 
-    public String getApellidos() {
-        return apellidos;
-    }
+  @JsonProperty
+  private String direccion;
 
-    public String getTelefono() {
-        return telefono;
-    }
+  @JsonProperty
+  private String email;
 
-    public String getDireccion() {
-        return direccion;
-    }
+  @JsonProperty
+  private String tipoPersona;
 
-    public String getEmail() {
-        return email;
-    }
+  public PersonaPatchResponse(Persona persona) {
+    this.id = persona.getId();
+    this.tipoIdentificacion = persona.getTipoIdentificacion();
+    this.numeroIdentificacion = persona.getNumeroIdentificacion();
+    this.nombres = persona.getNombres();
+    this.apellidos = persona.getApellidos();
+    this.telefono = persona.getTelefono();
+    this.direccion = persona.getDireccion();
+    this.email = persona.getEmail();
+    this.tipoPersona = persona.getTipoPersona();
+  }
 
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
+  public Long getId() {
+    return id;
+  }
+
+  public String getTipoIdentificacion() {
+    return tipoIdentificacion;
+  }
+
+  public String getNumeroIdentificacion() {
+    return numeroIdentificacion;
+  }
+
+  public String getNombres() {
+    return nombres;
+  }
+
+  public String getApellidos() {
+    return apellidos;
+  }
+
+  public String getTelefono() {
+    return telefono;
+  }
+
+  public String getDireccion() {
+    return direccion;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getTipoPersona() {
+    return tipoPersona;
+  }
 }

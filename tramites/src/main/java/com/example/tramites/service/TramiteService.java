@@ -25,30 +25,29 @@ public class TramiteService {
 
   @Autowired
   private PersonaRepository personaRepository;
-  
+
   @Autowired
   private EmpleadoRepository empleadoRepository;
 
-  public Tramite crearTramite(String nombreTramite, String description, Long personaId, Long empleadoId) { 
+  public Tramite crearTramite(String nombreTramite, String description, Long personaId, Long empleadoId) {
 
     try {
       Optional<Persona> persona = personaRepository.findById(personaId);
       Optional<Empleado> empleado = empleadoRepository.findById(empleadoId);
-  
+
       if (persona.isEmpty()) {
         throw new PersonaNotFoundException(personaId);
       }
-      
+
       if (empleado.isEmpty()) {
         throw new EmpleadoNotFoundException(empleadoId);
       }
 
       Tramite tramite = new Tramite(
-        nombreTramite,
-        description,
-        persona.get(),
-        empleado.get()
-      );
+          nombreTramite,
+          description,
+          persona.get(),
+          empleado.get());
 
       return tramiteRepository.save(tramite);
     } catch (PersonaNotFoundException | EmpleadoNotFoundException e) {
@@ -63,8 +62,8 @@ public class TramiteService {
   public List<Tramite> listarTramites() {
     List<Tramite> tramites = tramiteRepository.findAll();
     tramites.forEach(t -> {
-        t.getPersonaRadica().getNombres();
-        t.getEmpleadoRecibe().getNombres();
+      t.getPersonaRadica().getNombres();
+      t.getEmpleadoRecibe().getNombres();
     });
     return tramites;
   }

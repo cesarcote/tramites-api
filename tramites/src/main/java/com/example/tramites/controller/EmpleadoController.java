@@ -36,7 +36,8 @@ public class EmpleadoController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<EmpleadoPatchResponse> editarEmpleado(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+  public ResponseEntity<EmpleadoPatchResponse> editarEmpleado(@PathVariable Long id,
+      @RequestBody Map<String, Object> updates) {
     Empleado empleadoActualizado = empleadoService.editarEmpleadoParcial(id, updates);
     return ResponseEntity.ok(new EmpleadoPatchResponse(empleadoActualizado));
   }
